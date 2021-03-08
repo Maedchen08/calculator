@@ -1,10 +1,10 @@
 package com.example.calculators.data.repository
 
-import com.example.calculators.data.api.RetrofitInstance
+import com.example.calculators.data.api.CalculatorApi
 import com.example.calculators.data.model.CalculatorRequest
-import com.example.calculators.data.model.CalculatorResponse
+import javax.inject.Inject
 
-class CalculatorRepositoryPostImpl : CalculatorRepository {
-    override suspend fun onCount(calculatorRequest: CalculatorRequest) =
-        RetrofitInstance.calculatorApi.postCalculate(calculatorRequest)
+class CalculatorRepositoryPostImpl @Inject constructor(val calculatorApi: CalculatorApi) : CalculatorRepository {
+    override suspend fun onCount (calculatorRequest: CalculatorRequest) =
+       calculatorApi.postCalculate(calculatorRequest)
 }

@@ -10,7 +10,9 @@ import com.example.calculators.R
 import com.example.calculators.data.model.CalculatorRequest
 import com.example.calculators.data.repository.CalculatorRepositoryPostImpl
 import com.example.calculators.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
@@ -43,13 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,object :ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                val getRepo = CalculatorRepositoryPostImpl()
-                return MainActivityViewModel(getRepo) as T
-            }
-        }).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
     }
 
 

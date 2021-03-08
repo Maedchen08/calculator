@@ -2,11 +2,12 @@ package com.example.calculators.presentation
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.calculators.data.api.CalculatorApi
 import com.example.calculators.data.model.CalculatorRequest
 import com.example.calculators.data.model.CalculatorResponse
 import com.example.calculators.data.repository.CalculatorRepository
+import com.example.calculators.di.qualifier.CalculatorApi
 import com.example.calculators.util.Constants
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withTimeout
 import retrofit2.Call
@@ -14,8 +15,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class MainActivityViewModel(val repository: CalculatorRepository) : ViewModel() {
+@HiltViewModel
+
+class MainActivityViewModel @Inject constructor(@CalculatorApi val repository: CalculatorRepository) : ViewModel() {
 
 //    private var _mutableResult = MutableLiveData<String>()
 //    val mutableResult : LiveData<String>
@@ -54,34 +58,4 @@ class MainActivityViewModel(val repository: CalculatorRepository) : ViewModel() 
     }
 
 
-//    fun calculate(request: CalculatorRequest) {
-//        when(request.operator){
-//            "+", "-", "/", "*" -> {
-//                val retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
-//                    .addConverterFactory(MoshiConverterFactory.create()).build()
-//                val service = retrofit.create((CalculatorApi::class.java))
-//                val call = service.postCalculate(request)
-//                call.enqueue(object : Callback<CalNumResponse> {
-//                    override fun onFailure(call: Call<CalNumResponse>, t: Throwable) {
-//                        Log.d("Calculatorview", t.toString())
-//                    }
-//
-//                    override fun onResponse(
-//                        call: Call<CalNumResponse>,
-//                        response: Response<CalNumResponse>
-//                    ) {
-//                        val respon = response.body()!!
-//                        val output =
-//                            "Number 1 : ${respon.number1}, Number 2 : ${respon.number2}, Operator : ${respon.operator}, Result : ${respon.result}"
-//                        _mutableResult.value = output
-//                    }
-//                })
-//            }
-//
-//            else -> _mutableResult.value = "error"
-//
-//
-//        }
-//
-//
-//    }
+
